@@ -35,9 +35,26 @@
       href="https://cdn.jsdelivr.net/gh/BlackrockDigital/startbootstrap-creative@v5.1.8/css/creative.min.css"
       rel="stylesheet"
     />
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"
+      rel="stylesheet"
+    />
+
+    <style>
+      #progressbar {
+        background-color: blue;
+        height: 5px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 5000;
+      }
+    </style>
   </head>
 
   <body id="page-top">
+    <div id="progressbar"></div>
     <!-- Navigation -->
     <nav
       class="navbar navbar-expand-lg navbar-light fixed-top py-3"
@@ -142,7 +159,7 @@
           <div
             class="col-lg-3 col-md-6 text-center"
             data-scroll
-            data-scroll-animation="fadeInUp"
+            data-scroll-animation="bounce"
           >
             <div class="mt-5">
               <i class="fas fa-4x fa-gem text-primary mb-4"></i>
@@ -352,5 +369,7 @@
         </div>
       </div>
     </footer>
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.20/lodash.min.js"></script>
+    <script src="scripts.js"></script>
   </body>
 </html>
