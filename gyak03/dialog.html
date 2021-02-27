@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <template id="custom-dialog-template">
+      <style>
+        .dialog {
+          display: none;
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          justify-content: center;
+          align-items: center;
+          background-color: rgba(0, 0, 0, 0.5);
+        }
+        .dialog-content {
+          width: 300px;
+          height: 200px;
+          background-color: #eee;
+          padding: 16px;
+        }
+        .open {
+          display: flex;
+        }
+      </style>
+      <div class="dialog">
+        <div class="dialog-content">
+          <slot></slot>
+        </div>
+      </div>
+      <button><slot name="button"></slot></button>
+    </template>
+
+    <custom-dialog>
+      <span slot="button">Open dialog</span>
+      Dialog<br />
+      content
+    </custom-dialog>
+    <script>
+      // Dialógusablak Készíts egy komponenst, amely egy gombot generál, amelyre kattintva egy dialógusablak jelenik meg. Legyen lehetőség egyedi tartalmat a dialógusablakba tenni.
+      class CustomDialog extends HTMLElement {
+        constructor() {
+          super();
+          this.attachShadow({ mode: "open" });
+        }
+
+        connectedCallback() {
+          console.log("connected");
+          const template = document.querySelector("#custom-dialog-template");
+          const content = template.content.cloneNode(true);
+          this.shadowRoot.appendChild(content);
+
+          this.shadowRoot
+            .querySelector("button")
+            .addEventListener("click", this.showDialog);
+
+          document.addEventListener("keydown", this.handleKeyDown);
+        }
+
+        disconnectedCallback() {
+          console.log("disconnected");
+          document.removeEventListener("keydown", this.handleKeyDown);
+        }
+
+        handleKeyDown = (event) => {
+          if (event.code === "Escape") {
+            this.hideDialog();
+          }
+        };
+
+        showDialog = () => {
+          this.shadowRoot.querySelector(".dialog").classList.add("open");
+        };
+
+        hideDialog = () => {
+          this.shadowRoot.querySelector(".dialog").classList.remove("open");
+        };
+      }
+
+      customElements.define("custom-dialog", CustomDialog);
+    </script>
+  </body>
+</html>
