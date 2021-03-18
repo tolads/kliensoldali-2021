@@ -1,6 +1,8 @@
 import React from "react";
+
 import bonjovi from "../../assets/bonjovi.jpg";
 import PlaylistsList from "./PlaylistsList";
+import { examplePlaylists } from "../../domain/playlist";
 
 const Playlists = () => {
   return (
@@ -8,7 +10,7 @@ const Playlists = () => {
       <div className="ui container">
         <h1>My Playlists</h1>
         <div className="ui stackable two column grid">
-          <PlaylistsList />
+          <PlaylistsList playlists={examplePlaylists} />
           <div className="ui ten wide column">
             <h3>Classics</h3>
             <div className="ui very relaxed selection list">
