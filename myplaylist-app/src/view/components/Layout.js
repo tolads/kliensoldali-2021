@@ -14,9 +14,9 @@ const Layout = (props) => {
         <NavLink className="item" to="/playlists">
           <i className="headphones icon"></i> My Playlists
         </NavLink>
-        <a className="item" href="tracks.html">
+        <NavLink className="item" to="/tracks">
           <i className="music icon"></i> Tracks
-        </a>
+        </NavLink>
         <NavLink className="item" to="/search">
           <i className="search icon"></i> Search
         </NavLink>

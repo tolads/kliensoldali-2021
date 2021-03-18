@@ -9,6 +9,7 @@ import Layout from "./components/Layout";
 import Home from "./Home/Home";
 import Playlists from "./Playlists/Playlists";
 import Search from "./Search/Search";
+import Tracks from "./Tracks/Tracks";
 
 function App() {
   return (
@@ -20,6 +21,9 @@ function App() {
           </Route>
           <Route path="/playlists">
             <Playlists />
+          </Route>
+          <Route path="/tracks">
+            <Tracks />
           </Route>
           <Route path="/search">
             <Search />
