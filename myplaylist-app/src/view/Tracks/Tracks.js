@@ -1,4 +1,5 @@
 import { exampleTracks } from "../../domain/track";
+import AddOrEditTrack from "./AddOrEditTrack";
 import Track from "./Track";
 
 const Tracks = () => {
@@ -23,6 +24,8 @@ const Tracks = () => {
           ))}
         </tbody>
       </table>
+
+      <AddOrEditTrack />
     </div>
   );
 };
