@@ -1,47 +1,62 @@
-import bonjovi from "../../assets/bonjovi.jpg";
+import PropTypes from "prop-types";
 
-const TrackDetails = () => {
+const TrackDetails = ({
+  artist,
+  chordsURL,
+  length,
+  lyricsURL,
+  spotifyURL,
+  thumbnailURL,
+  title,
+}) => {
   return (
     <div className="ui segment">
       <div className="ui items">
         <div className="item">
           <div className="image">
-            <img src={bonjovi} alt="" />
+            <img src={thumbnailURL} alt="" />
           </div>
           <div className="content">
-            <div className="header">It's my life</div>
+            <div className="header">{title}</div>
             <div className="meta">
-              <span>Bon Jovi</span>
-              <span>4:35</span>
+              <span>{artist}</span>
+              <span>{length}</span>
             </div>
             <div className="extra">
-              <a
-                href="https://open.spotify.com/track/0v1XpBHnsbkCn7iJ9Ucr1l"
-                className="ui button tiny green button"
-              >
-                <i className="spotify icon"></i>
-                Listen on Spotify
-              </a>
-              <a
-                href="https://tabs.ultimate-guitar.com/tab/bon-jovi/its-my-life-chords-951538"
-                className="ui button tiny teal button"
-              >
-                <i className="microphone icon"></i>
-                Show lyrics
-              </a>
-              <a
-                href="https://www.azlyrics.com/lyrics/bonjovi/itsmylife.html"
-                className="ui button tiny orange button"
-              >
-                <i className="guitar icon"></i>
-                Show chords
-              </a>
+              {spotifyURL && (
+                <a href={spotifyURL} className="ui button tiny green button">
+                  <i className="spotify icon"></i>
+                  Listen on Spotify
+                </a>
+              )}
+              {chordsURL && (
+                <a href={chordsURL} className="ui button tiny teal button">
+                  <i className="microphone icon"></i>
+                  Show lyrics
+                </a>
+              )}
+              {lyricsURL && (
+                <a href={lyricsURL} className="ui button tiny orange button">
+                  <i className="guitar icon"></i>
+                  Show chords
+                </a>
+              )}
             </div>
           </div>
         </div>
       </div>
     </div>
   );
+};
+
+TrackDetails.propTypes = {
+  artist: PropTypes.string,
+  chordsURL: PropTypes.string,
+  length: PropTypes.string,
+  lyricsURL: PropTypes.string,
+  spotifyURL: PropTypes.string,
+  thumbnailURL: PropTypes.string,
+  title: PropTypes.string,
 };
 
 export default TrackDetails;

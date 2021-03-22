@@ -1,10 +1,13 @@
 import React from "react";
 
 import { examplePlaylists } from "../../domain/playlist";
+import { exampleTracks } from "../../domain/track";
 import PlaylistsList from "./PlaylistsList";
 import Playlist from "./Playlist";
 import TrackDetails from "./TrackDetails";
 import AddNewPlaylist from "./AddNewPlaylist";
+
+const exampleTrack = exampleTracks[0];
 
 const Playlists = () => {
   return (
@@ -16,7 +19,7 @@ const Playlists = () => {
           <Playlist />
         </div>
         <div className="ui divider"></div>
-        <TrackDetails />
+        <TrackDetails {...exampleTrack} />
       </div>
 
       <AddNewPlaylist />
