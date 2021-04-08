@@ -1,14 +1,54 @@
+import { useState } from "react";
 import { exampleTracks } from "../../domain/track";
 import AddOrEditTrack from "./AddOrEditTrack";
 import Track from "./Track";
 
-const Tracks = () => {
+const Tracks = ({ playlists }) => {
+  const [tracks, setTracks] = useState(exampleTracks);
+  const [open, setOpen] = useState(false);
+  const [editedTrackId, setEditedTrackId] = useState(null);
+
+  const editedTrack = tracks.find((track) => track.id === editedTrackId);
+
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  const addNewTrack = (newTrack) => {
+    setTracks([...tracks, { ...newTrack, id: Date.now() }]);
+  };
+
+  const updateTrack = (editedTrack) => {
+    const newTracks = tracks.map((track) => {
+      if (track.id === editedTrack.id) {
+        return editedTrack;
+      }
+      return track;
+    });
+    setTracks(newTracks);
+  };
+
+  const handleSubmit = (track) => {
+    if (typeof track.id === "number") {
+      updateTrack(track);
+    } else {
+      addNewTrack(track);
+    }
+  };
+
+  const deleteTrack = (trackId) => {
+    setTracks(tracks.filter((track) => track.id !== trackId));
+  };
+
   return (
     <div className="ui container">
-      <a href="#" className="ui right floated green button" id="newModal">
+      <button
+        className="ui right floated green button"
+        id="newModal"
+        onClick={handleOpen}
+      >
         <i className="plus icon"></i>
         New track
-      </a>
+      </button>
       <h1>Tracks</h1>
       <table className="ui celled striped table">
         <thead>
@@ -19,13 +59,27 @@ const Tracks = () => {
           </tr>
         </thead>
         <tbody>
-          {exampleTracks.map((track) => (
-            <Track key={track.id} track={track} />
+          {tracks.map((track) => (
+            <Track
+              key={track.id}
+              track={track}
+              onDelete={() => deleteTrack(track.id)}
+              startToEdit={() => {
+                setEditedTrackId(track.id);
+                handleOpen();
+              }}
+              playlists={playlists}
+            />
           ))}
         </tbody>
       </table>
 
-      <AddOrEditTrack />
+      <AddOrEditTrack
+        open={open}
+        onClose={handleClose}
+        onSubmit={handleSubmit}
+        track={editedTrack}
+      />
     </div>
   );
 };

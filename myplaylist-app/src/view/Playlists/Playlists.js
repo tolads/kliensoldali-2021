@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 
-import { examplePlaylists } from "../../domain/playlist";
 import { exampleTracks } from "../../domain/track";
 import PlaylistsList from "./PlaylistsList";
 import Playlist from "./Playlist";
@@ -9,8 +8,7 @@ import AddNewPlaylist from "./AddNewPlaylist";
 
 // playlistId állapotmező - és ha változik, trackId értéke legyen null
 
-const Playlists = () => {
-  const [playlists, setPlaylists] = useState(examplePlaylists);
+const Playlists = ({ playlists, addNewPlaylist }) => {
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => setOpen(true);
@@ -24,16 +22,6 @@ const Playlists = () => {
   const handlePlaylistSelect = (id) => {
     setPlaylistId(id);
     setTrackId(null);
-  };
-
-  const addNewPlaylist = (title) => {
-    setPlaylists((prevPlaylists) => {
-      const max = prevPlaylists.reduce(
-        (acc, curr) => Math.max(acc, curr.id),
-        0
-      );
-      return [...prevPlaylists, { title, tracks: [], id: max + 1 }];
-    });
   };
 
   return (

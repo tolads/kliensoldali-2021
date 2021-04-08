@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
+import { Dropdown } from "semantic-ui-react";
 
-const Track = ({ track }) => {
+const Track = ({ track, onDelete, startToEdit, playlists }) => {
   return (
     <tr>
       <td>
@@ -10,27 +11,20 @@ const Track = ({ track }) => {
         <i className="music icon"></i> {track.title}
       </td>
       <td className="right aligned collapsing">
-        <div className="ui icon top right pointing dropdown button">
-          <i className="plus icon"></i>
-          <div className="menu">
+        <Dropdown button icon="plus" className="icon">
+          <Dropdown.Menu>
             <div className="header">Add to playlist</div>
-            <div className="ui search icon input">
-              <i className="search icon"></i>
-              <input
-                type="text"
-                name="search"
-                placeholder="Search playlists..."
-              />
-            </div>
-            <div className="item">Heavy Metal</div>
-            <div className="item">Classics</div>
-            <div className="item">Movie Soundtracks</div>
-          </div>
-        </div>
-        <button className="ui icon button">
+            {playlists.map((playlist) => (
+              <div key={playlist.id} className="item">
+                {playlist.title}
+              </div>
+            ))}
+          </Dropdown.Menu>
+        </Dropdown>
+        <button className="ui icon button" onClick={startToEdit}>
           <i className="edit icon"></i>
         </button>
-        <button className="ui icon button red">
+        <button className="ui icon button red" onClick={onDelete}>
           <i className="trash icon"></i>
         </button>
       </td>
