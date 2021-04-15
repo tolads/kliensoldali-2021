@@ -1,10 +1,11 @@
-import { useContext } from "react";
+import { useSelector } from "react-redux";
 import PropTypes from "prop-types";
 import { Dropdown } from "semantic-ui-react";
-import { PlaylistContext } from "../../state/playlist/PlaylistProvider";
+
+import { getPlaylists } from "../../state/playlist/selectors";
 
 const Track = ({ track, onDelete, startToEdit }) => {
-  const { playlists } = useContext(PlaylistContext);
+  const playlists = useSelector(getPlaylists);
 
   return (
     <tr>

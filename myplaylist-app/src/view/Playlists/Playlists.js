@@ -1,15 +1,19 @@
 import React, { useContext, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import { TrackContext } from "../../state/track/TrackProvider";
-import { PlaylistContext } from "../../state/playlist/PlaylistProvider";
+import * as actions from "../../state/playlist/actions";
+import { getPlaylists } from "../../state/playlist/selectors";
 import PlaylistsList from "./PlaylistsList";
 import Playlist from "./Playlist";
 import TrackDetails from "./TrackDetails";
 import AddNewPlaylist from "./AddNewPlaylist";
 
 const Playlists = () => {
+  const dispatch = useDispatch();
+  const playlists = useSelector(getPlaylists);
+  const addNewPlaylist = (title) => dispatch(actions.addPlaylist(title));
   const { tracks } = useContext(TrackContext);
-  const { playlists, addNewPlaylist } = useContext(PlaylistContext);
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => setOpen(true);
