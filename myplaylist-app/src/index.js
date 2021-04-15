@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
+import configureStore from "./state/store";
 import TrackProvider from "./state/track/TrackProvider";
 import PlaylistProvider from "./state/playlist/PlaylistProvider";
 import "./index.css";
