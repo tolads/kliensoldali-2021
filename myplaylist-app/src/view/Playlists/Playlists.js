@@ -1,14 +1,15 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 
-import { exampleTracks } from "../../domain/track";
+import { TrackContext } from "../../state/track/TrackProvider";
+import { PlaylistContext } from "../../state/playlist/PlaylistProvider";
 import PlaylistsList from "./PlaylistsList";
 import Playlist from "./Playlist";
 import TrackDetails from "./TrackDetails";
 import AddNewPlaylist from "./AddNewPlaylist";
 
-// playlistId állapotmező - és ha változik, trackId értéke legyen null
-
-const Playlists = ({ playlists, addNewPlaylist }) => {
+const Playlists = () => {
+  const { tracks } = useContext(TrackContext);
+  const { playlists, addNewPlaylist } = useContext(PlaylistContext);
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => setOpen(true);
@@ -17,7 +18,7 @@ const Playlists = ({ playlists, addNewPlaylist }) => {
   const [playlistId, setPlaylistId] = useState(null);
   const playlist = playlists.find((playlist) => playlist.id === playlistId);
   const [trackId, setTrackId] = useState(null);
-  const track = exampleTracks.find((track) => track.id === trackId);
+  const track = tracks.find((track) => track.id === trackId);
 
   const handlePlaylistSelect = (id) => {
     setPlaylistId(id);

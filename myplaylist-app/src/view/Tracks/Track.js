@@ -1,7 +1,11 @@
+import { useContext } from "react";
 import PropTypes from "prop-types";
 import { Dropdown } from "semantic-ui-react";
+import { PlaylistContext } from "../../state/playlist/PlaylistProvider";
 
-const Track = ({ track, onDelete, startToEdit, playlists }) => {
+const Track = ({ track, onDelete, startToEdit }) => {
+  const { playlists } = useContext(PlaylistContext);
+
   return (
     <tr>
       <td>

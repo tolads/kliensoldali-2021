@@ -1,12 +1,19 @@
 import React from "react";
 import ReactDOM from "react-dom";
+
+import TrackProvider from "./state/track/TrackProvider";
+import PlaylistProvider from "./state/playlist/PlaylistProvider";
 import "./index.css";
 import App from "./view/App";
 import reportWebVitals from "./reportWebVitals";
 
 ReactDOM.render(
   // <React.StrictMode>
-  <App />,
+  <PlaylistProvider>
+    <TrackProvider>
+      <App />
+    </TrackProvider>
+  </PlaylistProvider>,
   // </React.StrictMode>,
   document.getElementById("root")
 );

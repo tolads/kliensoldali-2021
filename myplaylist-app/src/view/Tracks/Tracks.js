@@ -1,10 +1,11 @@
-import { useState } from "react";
-import { exampleTracks } from "../../domain/track";
+import { useContext, useState } from "react";
+
+import { TrackContext } from "../../state/track/TrackProvider";
 import AddOrEditTrack from "./AddOrEditTrack";
 import Track from "./Track";
 
-const Tracks = ({ playlists }) => {
-  const [tracks, setTracks] = useState(exampleTracks);
+const Tracks = () => {
+  const { tracks, setTracks } = useContext(TrackContext);
   const [open, setOpen] = useState(false);
   const [editedTrackId, setEditedTrackId] = useState(null);
 
@@ -44,7 +45,10 @@ const Tracks = ({ playlists }) => {
       <button
         className="ui right floated green button"
         id="newModal"
-        onClick={handleOpen}
+        onClick={() => {
+          setEditedTrackId(null);
+          handleOpen();
+        }}
       >
         <i className="plus icon"></i>
         New track
@@ -68,7 +72,6 @@ const Tracks = ({ playlists }) => {
                 setEditedTrackId(track.id);
                 handleOpen();
               }}
-              playlists={playlists}
             />
           ))}
         </tbody>
