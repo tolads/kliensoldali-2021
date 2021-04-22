@@ -9,6 +9,8 @@ import Track from "./Track";
 const Tracks = () => {
   const dispatch = useDispatch();
   const tracks = useSelector(getTracks);
+  const wholeState = useSelector((state) => state);
+  console.log(wholeState);
   const [open, setOpen] = useState(false);
   const [editedTrackId, setEditedTrackId] = useState(null);
 
