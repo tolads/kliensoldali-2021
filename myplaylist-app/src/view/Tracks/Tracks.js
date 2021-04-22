@@ -1,11 +1,14 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
-import { TrackContext } from "../../state/track/TrackProvider";
+import * as trackActions from "../../state/track/actions";
+import { getTracks } from "../../state/track/selectors";
 import AddOrEditTrack from "./AddOrEditTrack";
 import Track from "./Track";
 
 const Tracks = () => {
-  const { tracks, setTracks } = useContext(TrackContext);
+  const dispatch = useDispatch();
+  const tracks = useSelector(getTracks);
   const [open, setOpen] = useState(false);
   const [editedTrackId, setEditedTrackId] = useState(null);
 
@@ -15,17 +18,11 @@ const Tracks = () => {
   const handleClose = () => setOpen(false);
 
   const addNewTrack = (newTrack) => {
-    setTracks([...tracks, { ...newTrack, id: Date.now() }]);
+    dispatch(trackActions.addTrack(newTrack));
   };
 
   const updateTrack = (editedTrack) => {
-    const newTracks = tracks.map((track) => {
-      if (track.id === editedTrack.id) {
-        return editedTrack;
-      }
-      return track;
-    });
-    setTracks(newTracks);
+    dispatch(trackActions.updateTrack(editedTrack));
   };
 
   const handleSubmit = (track) => {
@@ -37,7 +34,7 @@ const Tracks = () => {
   };
 
   const deleteTrack = (trackId) => {
-    setTracks(tracks.filter((track) => track.id !== trackId));
+    dispatch(trackActions.deleteTrack(trackId));
   };
 
   return (

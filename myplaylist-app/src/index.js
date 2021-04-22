@@ -3,7 +3,6 @@ import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 
 import configureStore from "./state/store";
-import TrackProvider from "./state/track/TrackProvider";
 import "./index.css";
 import App from "./view/App";
 import reportWebVitals from "./reportWebVitals";
@@ -13,9 +12,7 @@ const store = configureStore();
 ReactDOM.render(
   // <React.StrictMode>
   <Provider store={store}>
-    <TrackProvider>
-      <App />
-    </TrackProvider>
+    <App />
   </Provider>,
   // </React.StrictMode>,
   document.getElementById("root")
