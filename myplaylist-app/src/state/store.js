@@ -1,6 +1,7 @@
 import { createStore, combineReducers, applyMiddleware } from "redux";
 import { createLogger } from "redux-logger";
 import { composeWithDevTools } from "redux-devtools-extension";
+import ReduxThunk from "redux-thunk";
 
 import playlistsReducer from "./playlist/reducer";
 import tracksReducer from "./track/reducer";
@@ -31,7 +32,7 @@ const configureStore = (preloadedState) => {
   return createStore(
     rootReducer,
     preloadedState,
-    composeWithDevTools(applyMiddleware(logger))
+    composeWithDevTools(applyMiddleware(ReduxThunk, logger))
   );
 };
 

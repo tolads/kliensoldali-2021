@@ -1,3 +1,5 @@
+import * as api from "../../api";
+
 export const ADD_TRACK = "ADD_TRACK";
 export const UPDATE_TRACK = "UPDATE_TRACK";
 export const DELETE_TRACK = "DELETE_TRACK";
@@ -21,3 +23,10 @@ export const deleteTrack = (trackId) => ({
   type: DELETE_TRACK,
   payload: trackId,
 });
+
+export const fetchTracks = () => {
+  return async (dispatch) => {
+    const tracks = await api.track.fetch();
+    dispatch(setTracks(tracks));
+  };
+};

@@ -7,7 +7,7 @@ import {
   Redirect,
 } from "react-router-dom";
 
-import * as api from "../api";
+// import * as api from "../api";
 import * as playlistActions from "../state/playlist/actions";
 import * as trackActions from "../state/track/actions";
 import Layout from "./components/Layout";
@@ -20,12 +20,14 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    api.playlist.fetch().then((playlists) => {
-      dispatch(playlistActions.setPlaylists(playlists));
-    });
-    api.track.fetch().then((tracks) => {
-      dispatch(trackActions.setTracks(tracks));
-    });
+    dispatch(playlistActions.fetchPlaylists());
+    // api.playlist.fetch().then((playlists) => {
+    //   dispatch(playlistActions.setPlaylists(playlists));
+    // });
+    dispatch(trackActions.fetchTracks());
+    // api.track.fetch().then((tracks) => {
+    //   dispatch(trackActions.setTracks(tracks));
+    // });
   }, [dispatch]);
 
   return (
