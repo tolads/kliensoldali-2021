@@ -1,5 +1,6 @@
 import { createStore, combineReducers, applyMiddleware } from "redux";
-import logger from "redux-logger";
+import { createLogger } from "redux-logger";
+import { composeWithDevTools } from "redux-devtools-extension";
 
 import playlistsReducer from "./playlist/reducer";
 import tracksReducer from "./track/reducer";
@@ -10,6 +11,8 @@ const rootReducer = combineReducers({
   playlists: playlistsReducer,
   tracks: tracksReducer,
 });
+
+const logger = createLogger({ collapsed: true });
 
 // ({ getState, dispatch }) => next => action => {}
 // const logger = (store) => (next) => (action) => {
@@ -25,7 +28,11 @@ const rootReducer = combineReducers({
 // };
 
 const configureStore = (preloadedState) => {
-  return createStore(rootReducer, preloadedState, applyMiddleware(logger));
+  return createStore(
+    rootReducer,
+    preloadedState,
+    composeWithDevTools(applyMiddleware(logger))
+  );
 };
 
 export default configureStore;
