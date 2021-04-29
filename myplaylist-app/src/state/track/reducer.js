@@ -7,6 +7,9 @@ const defaultState = {
 
 const trackReducer = (state = defaultState, action) => {
   if (action.type === ADD_TRACK) {
+    // nem jó mert mutál!
+    // state.items.push(action.payload);
+    // return state;
     return {
       items: [...state.items, action.payload],
     };
