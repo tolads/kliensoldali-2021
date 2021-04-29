@@ -1,11 +1,16 @@
-import { examplePlaylists } from "../../domain/playlist";
-import { ADD_PLAYLIST, ADD_TRACK_TO_PLAYLIST } from "./actions";
+import { ADD_PLAYLIST, ADD_TRACK_TO_PLAYLIST, SET_PLAYLISTS } from "./actions";
 
 const defaultState = {
-  items: examplePlaylists,
+  items: [],
 };
 
 const playlistReducer = (state = defaultState, action) => {
+  if (action.type === SET_PLAYLISTS) {
+    return {
+      items: action.payload,
+    };
+  }
+
   if (action.type === ADD_PLAYLIST) {
     return {
       items: [...state.items, action.payload],

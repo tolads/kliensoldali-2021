@@ -1,11 +1,16 @@
-import { exampleTracks } from "../../domain/track";
-import { ADD_TRACK, UPDATE_TRACK, DELETE_TRACK } from "./actions";
+import { ADD_TRACK, UPDATE_TRACK, DELETE_TRACK, SET_TRACKS } from "./actions";
 
 const defaultState = {
-  items: exampleTracks,
+  items: [],
 };
 
 const trackReducer = (state = defaultState, action) => {
+  if (action.type === SET_TRACKS) {
+    return {
+      items: action.payload,
+    };
+  }
+
   if (action.type === ADD_TRACK) {
     // nem jó mert mutál!
     // state.items.push(action.payload);

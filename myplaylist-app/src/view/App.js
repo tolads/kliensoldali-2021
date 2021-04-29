@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import {
   BrowserRouter as Router,
   Switch,
@@ -5,6 +7,9 @@ import {
   Redirect,
 } from "react-router-dom";
 
+import * as api from "../api";
+import * as playlistActions from "../state/playlist/actions";
+import * as trackActions from "../state/track/actions";
 import Layout from "./components/Layout";
 import Home from "./Home/Home";
 import Playlists from "./Playlists/Playlists";
@@ -12,6 +17,17 @@ import Search from "./Search/Search";
 import Tracks from "./Tracks/Tracks";
 
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    api.playlist.fetch().then((playlists) => {
+      dispatch(playlistActions.setPlaylists(playlists));
+    });
+    api.track.fetch().then((tracks) => {
+      dispatch(trackActions.setTracks(tracks));
+    });
+  }, [dispatch]);
+
   return (
     <Router>
       <Layout>
