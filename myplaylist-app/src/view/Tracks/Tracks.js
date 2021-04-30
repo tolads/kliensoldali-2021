@@ -28,7 +28,7 @@ const Tracks = () => {
   };
 
   const handleSubmit = (track) => {
-    if (typeof track.id === "number") {
+    if (track.id !== undefined) {
       updateTrack(track);
     } else {
       addNewTrack(track);

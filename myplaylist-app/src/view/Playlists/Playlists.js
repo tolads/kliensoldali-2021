@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import * as playlistActions from "../../state/playlist/actions";
-import { getPlaylists } from "../../state/playlist/selectors";
+import { getPlaylistsWithTracks } from "../../state/playlist/selectors";
 import { getTracks } from "../../state/track/selectors";
 import PlaylistsList from "./PlaylistsList";
 import Playlist from "./Playlist";
@@ -11,7 +11,7 @@ import AddNewPlaylist from "./AddNewPlaylist";
 
 const Playlists = () => {
   const dispatch = useDispatch();
-  const playlists = useSelector(getPlaylists);
+  const playlists = useSelector(getPlaylistsWithTracks);
   const tracks = useSelector(getTracks);
   const addNewPlaylist = (title) =>
     dispatch(playlistActions.addPlaylist(title));

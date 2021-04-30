@@ -3,11 +3,11 @@ import PropTypes from "prop-types";
 import { Dropdown } from "semantic-ui-react";
 
 import * as playlistActions from "../../state/playlist/actions";
-import { getPlaylists } from "../../state/playlist/selectors";
+import { getPlaylistsWithTracks } from "../../state/playlist/selectors";
 
 const Track = ({ track, onDelete, startToEdit }) => {
   const dispatch = useDispatch();
-  const playlists = useSelector(getPlaylists);
+  const playlists = useSelector(getPlaylistsWithTracks);
   const addTrackToPlaylist = (playlistId) => {
     dispatch(playlistActions.addTrackToPlaylist(playlistId, track.id));
   };

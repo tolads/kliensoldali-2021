@@ -1,4 +1,9 @@
-import { ADD_PLAYLIST, ADD_TRACK_TO_PLAYLIST, SET_PLAYLISTS } from "./actions";
+import {
+  ADD_PLAYLIST,
+  ADD_TRACK_TO_PLAYLIST,
+  SET_PLAYLISTS,
+  UPDATE_PLAYLIST,
+} from "./actions";
 
 const defaultState = {
   items: [],
@@ -14,6 +19,17 @@ const playlistReducer = (state = defaultState, action) => {
   if (action.type === ADD_PLAYLIST) {
     return {
       items: [...state.items, action.payload],
+    };
+  }
+
+  if (action.type === UPDATE_PLAYLIST) {
+    return {
+      items: state.items.map((playlist) => {
+        if (playlist.id !== action.payload.id) {
+          return playlist;
+        }
+        return action.payload;
+      }),
     };
   }
 

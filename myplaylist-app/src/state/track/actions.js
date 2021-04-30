@@ -9,17 +9,18 @@ export const setTracks = (tracks) => ({
   type: SET_TRACKS,
   payload: tracks,
 });
-export const addTrack = (track) => ({
+
+export const addTrackToStore = (track) => ({
   type: ADD_TRACK,
-  payload: { ...track, id: Date.now() },
+  payload: track,
 });
 
-export const updateTrack = (track) => ({
+export const updateTrackInStore = (track) => ({
   type: UPDATE_TRACK,
   payload: track,
 });
 
-export const deleteTrack = (trackId) => ({
+export const deleteTrackFromStore = (trackId) => ({
   type: DELETE_TRACK,
   payload: trackId,
 });
@@ -28,5 +29,26 @@ export const fetchTracks = () => {
   return async (dispatch) => {
     const tracks = await api.track.fetch();
     dispatch(setTracks(tracks));
+  };
+};
+
+export const addTrack = (track) => {
+  return async (dispatch) => {
+    const newTrack = await api.track.create(track);
+    dispatch(addTrackToStore(newTrack));
+  };
+};
+
+export const updateTrack = (track) => {
+  return async (dispatch) => {
+    await api.track.update(track);
+    dispatch(updateTrackInStore(track));
+  };
+};
+
+export const deleteTrack = (trackId) => {
+  return async (dispatch) => {
+    await api.track.delete(trackId);
+    dispatch(deleteTrackFromStore(trackId));
   };
 };
