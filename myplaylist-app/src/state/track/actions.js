@@ -1,4 +1,5 @@
 import * as api from "../../api";
+import * as authActions from "../auth/actions";
 import { deleteTrackFromPlaylists } from "../playlist/actions";
 
 export const SET_FETCHING = "SET_FETCHING";
@@ -34,7 +35,9 @@ export const deleteTrackFromStore = (trackId) => ({
 export const fetchTracks = () => {
   return async (dispatch) => {
     dispatch(setFetching());
-    const tracks = await api.track.fetch();
+    const tracks = await dispatch(
+      authActions.requestWithToken(api.track.fetch)
+    );
     dispatch(setTracks(tracks));
   };
 };
@@ -42,7 +45,9 @@ export const fetchTracks = () => {
 export const addTrack = (track) => {
   return async (dispatch) => {
     dispatch(setFetching());
-    const newTrack = await api.track.create(track);
+    const newTrack = await dispatch(
+      authActions.requestWithToken(api.track.create, track)
+    );
     dispatch(addTrackToStore(newTrack));
   };
 };
@@ -50,7 +55,7 @@ export const addTrack = (track) => {
 export const updateTrack = (track) => {
   return async (dispatch) => {
     dispatch(setFetching());
-    await api.track.update(track);
+    await dispatch(authActions.requestWithToken(api.track.update, track));
     dispatch(updateTrackInStore(track));
   };
 };
@@ -58,7 +63,7 @@ export const updateTrack = (track) => {
 export const deleteTrack = (trackId) => {
   return async (dispatch) => {
     dispatch(setFetching());
-    await api.track.delete(trackId);
+    await dispatch(authActions.requestWithToken(api.track.delete, trackId));
     dispatch(deleteTrackFromStore(trackId));
     dispatch(deleteTrackFromPlaylists(trackId));
   };

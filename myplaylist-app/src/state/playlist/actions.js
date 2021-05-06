@@ -1,4 +1,5 @@
 import * as api from "api";
+import * as authActions from "../auth/actions";
 import { getPlaylists } from "./selectors";
 
 export const ADD_PLAYLIST = "ADD_PLAYLIST";
@@ -28,7 +29,12 @@ export const updatePlaylist = (playlist) => ({
 
 export const addPlaylist = (title) => {
   return async (dispatch) => {
-    const playlist = await api.playlist.create({ title: title, tracks: [] });
+    const playlist = await dispatch(
+      authActions.requestWithToken(api.playlist.create, {
+        title: title,
+        tracks: [],
+      })
+    );
     dispatch(addPlaylistToStore(playlist));
   };
 };
@@ -41,14 +47,18 @@ export const addTrackToPlaylist = (playlistId, trackId) => {
       ...playlist,
       tracks: [...playlist.tracks, trackId],
     };
-    await api.playlist.update(updatedPlaylist);
+    await dispatch(
+      authActions.requestWithToken(api.playlist.update, updatedPlaylist)
+    );
     dispatch(updatePlaylist(updatedPlaylist));
   };
 };
 
 export const fetchPlaylists = () => {
   return async (dispatch) => {
-    const playlists = await api.playlist.fetch();
+    const playlists = await dispatch(
+      authActions.requestWithToken(api.playlist.fetch)
+    );
     dispatch(setPlaylists(playlists));
   };
 };
@@ -62,7 +72,9 @@ export const deleteTrackFromPlaylists = (trackId) => {
         ...playlist,
         tracks: playlist.tracks.filter((id) => id !== trackId),
       };
-      await api.playlist.update(updatedPlaylist);
+      await dispatch(
+        authActions.requestWithToken(api.playlist.update, updatedPlaylist)
+      );
       dispatch(updatePlaylist(updatedPlaylist));
     });
   };

@@ -1,17 +1,17 @@
-const { authenticate } = require('@feathersjs/authentication').hooks;
+const { authenticate } = require("@feathersjs/authentication").hooks;
 
-const addUser = require('../../hooks/add-user');
+const addUser = require("../../hooks/add-user");
 
 module.exports = {
   before: {
-    // all: [ authenticate('jwt') ],
-    all: [],
+    all: [authenticate("jwt")],
+    // all: [],
     find: [],
     get: [],
     create: [addUser()],
     update: [],
     patch: [],
-    remove: []
+    remove: [],
   },
 
   after: {
@@ -21,7 +21,7 @@ module.exports = {
     create: [],
     update: [],
     patch: [],
-    remove: []
+    remove: [],
   },
 
   error: {
@@ -31,6 +31,6 @@ module.exports = {
     create: [],
     update: [],
     patch: [],
-    remove: []
-  }
+    remove: [],
+  },
 };

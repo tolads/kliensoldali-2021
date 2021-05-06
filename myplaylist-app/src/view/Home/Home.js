@@ -1,4 +1,28 @@
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
+import * as authActions from "state/auth/actions";
+import { getIsLoggedIn } from "state/auth/selectors";
+
 const Home = () => {
+  const dispatch = useDispatch();
+  const loggedIn = useSelector(getIsLoggedIn);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleFieldChange = (event) => {
+    if (event.target.name === "username") {
+      setUsername(event.target.value);
+    } else {
+      setPassword(event.target.value);
+    }
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    dispatch(authActions.login({ username, password }));
+  };
+
   return (
     <div className="ui center aligned container">
       <h1>My Playlist App</h1>
@@ -8,23 +32,36 @@ const Home = () => {
       <div className="ui segment">
         <div className="ui two column very relaxed stackable grid">
           <div className="column">
-            <div className="ui form">
-              <div className="field">
-                <label>Username</label>
-                <div className="ui left icon input">
-                  <input type="text" placeholder="Username" />
-                  <i className="user icon"></i>
+            {!loggedIn && (
+              <form className="ui form" onSubmit={handleSubmit}>
+                <div className="field">
+                  <label>Username</label>
+                  <div className="ui left icon input">
+                    <input
+                      name="username"
+                      type="text"
+                      placeholder="Username"
+                      value={username}
+                      onChange={handleFieldChange}
+                    />
+                    <i className="user icon"></i>
+                  </div>
                 </div>
-              </div>
-              <div className="field">
-                <label>Password</label>
-                <div className="ui left icon input">
-                  <input type="password" />
-                  <i className="lock icon"></i>
+                <div className="field">
+                  <label>Password</label>
+                  <div className="ui left icon input">
+                    <input
+                      name="password"
+                      type="password"
+                      value={password}
+                      onChange={handleFieldChange}
+                    />
+                    <i className="lock icon"></i>
+                  </div>
                 </div>
-              </div>
-              <div className="ui blue submit button">Login</div>
-            </div>
+                <button className="ui blue submit button">Login</button>
+              </form>
+            )}
           </div>
           <div className="middle aligned column">
             <div className="ui big button">

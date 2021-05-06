@@ -1,11 +1,12 @@
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   Redirect,
 } from "react-router-dom";
+import { getIsLoggedIn } from "state/auth/selectors";
 
 // import * as api from "../api";
 import * as playlistActions from "../state/playlist/actions";
@@ -17,18 +18,15 @@ import Search from "./Search/Search";
 import Tracks from "./Tracks/Tracks";
 
 function App() {
+  const loggedIn = useSelector(getIsLoggedIn);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(playlistActions.fetchPlaylists());
-    // api.playlist.fetch().then((playlists) => {
-    //   dispatch(playlistActions.setPlaylists(playlists));
-    // });
-    dispatch(trackActions.fetchTracks());
-    // api.track.fetch().then((tracks) => {
-    //   dispatch(trackActions.setTracks(tracks));
-    // });
-  }, [dispatch]);
+    if (loggedIn) {
+      dispatch(playlistActions.fetchPlaylists());
+      dispatch(trackActions.fetchTracks());
+    }
+  }, [dispatch, loggedIn]);
 
   return (
     <Router>

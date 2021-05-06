@@ -3,12 +3,14 @@ import { createLogger } from "redux-logger";
 import { composeWithDevTools } from "redux-devtools-extension";
 import ReduxThunk from "redux-thunk";
 
+import authReducer from "./auth/reducer";
 import playlistsReducer from "./playlist/reducer";
 import tracksReducer from "./track/reducer";
 // import { addPlaylist } from "./playlist/actions";
 
 // (state, action) => state
 const rootReducer = combineReducers({
+  auth: authReducer,
   playlists: playlistsReducer,
   tracks: tracksReducer,
 });
