@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import * as playlistActions from "../../state/playlist/actions";
-import { getPlaylistsWithTracks } from "../../state/playlist/selectors";
-import { getTracks } from "../../state/track/selectors";
+import * as playlistActions from "state/playlist/actions";
+import { getPlaylistsWithTracks } from "state/playlist/selectors";
+import { getTracks } from "state/track/selectors";
 import PlaylistsList from "./PlaylistsList";
 import Playlist from "./Playlist";
 import TrackDetails from "./TrackDetails";
