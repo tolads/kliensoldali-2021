@@ -11,13 +11,9 @@ export const setPlaylists = (playlists) => ({
   payload: playlists,
 });
 
-export const addPlaylist = (title) => ({
+export const addPlaylistToStore = (playlist) => ({
   type: ADD_PLAYLIST,
-  payload: {
-    id: Date.now(),
-    title,
-    tracks: [],
-  },
+  payload: playlist,
 });
 
 export const updatePlaylist = (playlist) => ({
@@ -29,6 +25,13 @@ export const updatePlaylist = (playlist) => ({
 //   type: ADD_TRACK_TO_PLAYLIST,
 //   payload: { playlistId, trackId },
 // });
+
+export const addPlaylist = (title) => {
+  return async (dispatch) => {
+    const playlist = await api.playlist.create({ title: title, tracks: [] });
+    dispatch(addPlaylistToStore(playlist));
+  };
+};
 
 export const addTrackToPlaylist = (playlistId, trackId) => {
   return async (dispatch, getState) => {
@@ -47,5 +50,20 @@ export const fetchPlaylists = () => {
   return async (dispatch) => {
     const playlists = await api.playlist.fetch();
     dispatch(setPlaylists(playlists));
+  };
+};
+
+export const deleteTrackFromPlaylists = (trackId) => {
+  return async (dispatch, getState) => {
+    const playlists = getPlaylists(getState());
+    playlists.forEach(async (playlist) => {
+      if (playlist.tracks.every((id) => id !== trackId)) return;
+      const updatedPlaylist = {
+        ...playlist,
+        tracks: playlist.tracks.filter((id) => id !== trackId),
+      };
+      await api.playlist.update(updatedPlaylist);
+      dispatch(updatePlaylist(updatedPlaylist));
+    });
   };
 };

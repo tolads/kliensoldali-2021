@@ -1,4 +1,5 @@
 import * as api from "../../api";
+import { deleteTrackFromPlaylists } from "../playlist/actions";
 
 export const ADD_TRACK = "ADD_TRACK";
 export const UPDATE_TRACK = "UPDATE_TRACK";
@@ -50,5 +51,6 @@ export const deleteTrack = (trackId) => {
   return async (dispatch) => {
     await api.track.delete(trackId);
     dispatch(deleteTrackFromStore(trackId));
+    dispatch(deleteTrackFromPlaylists(trackId));
   };
 };
