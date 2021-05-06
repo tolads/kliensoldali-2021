@@ -2,11 +2,12 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import * as trackActions from "../../state/track/actions";
-import { getTracks } from "../../state/track/selectors";
+import { getTracks, getIsTracksFetching } from "../../state/track/selectors";
 import AddOrEditTrack from "./AddOrEditTrack";
 import Track from "./Track";
 
 const Tracks = () => {
+  const fetching = useSelector(getIsTracksFetching);
   const dispatch = useDispatch();
   const tracks = useSelector(getTracks);
   const wholeState = useSelector((state) => state);
@@ -40,7 +41,13 @@ const Tracks = () => {
   };
 
   return (
-    <div className="ui container">
+    <div className="ui container" style={{ position: "relative" }}>
+      {fetching && (
+        <div className="ui active inverted dimmer">
+          <div className="ui large elastic text loader">Loading</div>
+        </div>
+      )}
+
       <button
         className="ui right floated green button"
         id="newModal"
