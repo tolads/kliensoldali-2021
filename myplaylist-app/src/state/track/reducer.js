@@ -6,7 +6,7 @@ import {
   SET_FETCHING,
 } from "./actions";
 
-const defaultState = {
+export const defaultState = {
   items: [],
   fetching: false,
 };
