@@ -9,9 +9,11 @@ import {
 import { getIsLoggedIn } from "state/auth/selectors";
 
 // import * as api from "../api";
+import "state/messages/actions";
 import * as playlistActions from "../state/playlist/actions";
 import * as trackActions from "../state/track/actions";
 import Layout from "./components/Layout";
+import Toasts from "./components/Toasts";
 import Home from "./Home/Home";
 import Playlists from "./Playlists/Playlists";
 import Search from "./Search/Search";
@@ -30,6 +32,7 @@ function App() {
 
   return (
     <Router>
+      <Toasts />
       <Layout>
         <Switch>
           <Route exact path="/">
